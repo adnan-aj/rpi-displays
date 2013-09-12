@@ -16,20 +16,14 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <linux/types.h>
-//#include <linux/font.h>
 
 #include "i2c-userspace.h"
 #include "adafruit-ssd1306.h"
 #include "../fonts/font.h"
 
-
 #define I2CADDR_OLED 0x3c
 
-extern  const unsigned char fontdata_8x16[];
-
-
 #define msleep(MS)	usleep((MS) * 1000)
-#define RETRY_TIMEOUT	20000
 
 void lcd_home(void);
 int lcd_putchar(int c);
@@ -37,7 +31,6 @@ int lcd_putc(int c, int update);
 int lcd_puts(char *s);
 int lcd_setfont(int v);
 void lcd_gotoxy(int x, int y);
-void lcd_flushpagerow(int pagerow);
 
 int i2cdev_testopen(const char *devbusname, int i2caddr_test)
 {
@@ -81,7 +74,6 @@ int main(int argc, char * argv[])
     printf("i2cdev_testopen: successful, fd_i2cbus = %d, rpi_rev = %d\n",
 	   fd_adafruit,
 	   rpi_rev);
-
     
     lcd_init(fd_adafruit);
     invertDisplay(1);
@@ -103,32 +95,10 @@ int main(int argc, char * argv[])
     clearDisplay();
     display();
 
-/*   
-    lcd_putchar('H');
-    lcd_putchar('e');
-    lcd_putchar('l');
-    lcd_putchar('l');
-    lcd_putchar('o');
-    display();
-    lcd_puts(" 12 Geeks!");
- 
-    lcd_puts("the card is   ");   
-    lcd_gotoxy(0, 10);
-    lcd_setfont(3);
-    lcd_puts("Thank you for this    OLED module");
+    if (argc > 1)
+	lcd_puts(argv[1]);  
+    return 0;
     
-    lcd_gotoxy(0, 26);
-    lcd_setfont(9);
-    lcd_puts("Thanks! THanks!! THANKS!!!");
-  */
-
-
-//    lcd_setfont(5);
-
-	if (argc > 1)
-		lcd_puts(argv[1]);  
-	    return 0;
-
 }
 
 
@@ -174,7 +144,7 @@ int lcd_putc(int c, int update)
 {
     int x, y, height, width;
     unsigned char *p;
-    struct font_desc *font;
+    const struct font_desc *font;
     
     font = fonts[fontn];
     width = font->width;
