@@ -7,12 +7,12 @@
 ############################################################################
 
 CC = gcc
-CFLAGS = -c -Wall -I ../c_examples -I/usr/src/linux/include -DSSD1306_128_32
+CFLAGS = -c -Wall -I ../c_examples -DSSD1306_128_32
 LDFLAGS =
 
 TARGET   = lcd
 SOURCES  =  lcd-test.c adafruit-i2c-oled.c
-HEADERS  =  adafruit-ssd1306.h  i2c-userspace.h ../fonts/font.h
+HEADERS  =  adafruit-ssd1306.h i2c-userspace.h ../fonts/font.h
 FONTS    = ../fonts/fonts.a
 
 OBJECTS = $(SOURCES:.c=.o)
