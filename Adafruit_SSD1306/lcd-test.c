@@ -1,21 +1,19 @@
 /***********************************************************************
- * lcd-test.c - ATmega168PA-based display controller for the
- * Transflective COG Graphics LCD Module part# NHD-C160100DIZ-FSW-FBW.
- * With RS485 interface.
- * MCU: ATmega168PA @ 7.372800MHz resonator (full-swing).
+ * lcd-test.c - Test program for the Adafruit I2C 128x32 OLED display 
+ * module connected to the Raspberry Pi I2C pins of the GPIO header.
+ * 
+ * The Adafruit I2C OLED module is based on the SSD1306 OLED controller.
+ * The I2C display core library routines are in adafruit-i2c-oled.c
+ * The I2C routines depends on i2c-userspace.h inline functions.
  *
- *
- * 20120218 Adnan - Initial
- * 20130218 Adnan - Adapted from mega485-display.c
+ * Copyright (c) 2012-2013, Adnan Jalaludin <adnan singnet.com.sg>
+ * All rights reserved.
+ * BSD license, check LICENSE for more information.
  ***********************************************************************/
 
-#include <ctype.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <stdint.h>
-#include <stdlib.h>
 #include <fcntl.h>
-#include <linux/types.h>
 
 #include "i2c-userspace.h"
 #include "adafruit-ssd1306.h"
